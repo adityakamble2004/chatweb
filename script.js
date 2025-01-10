@@ -1,5 +1,5 @@
-// Public WebSocket server URL (free for small apps)
-const WEBSOCKET_URL = "wss://ws.postman-echo.com/raw";
+// Public WebSocket server URL (real-time server)
+const WEBSOCKET_URL = "wss://realtime.playground.socket.io";
 
 const messagesDiv = document.getElementById("messages");
 const input = document.getElementById("messageInput");
@@ -7,6 +7,11 @@ const sendButton = document.getElementById("sendButton");
 
 // Initialize WebSocket connection
 const socket = new WebSocket(WEBSOCKET_URL);
+
+// Handle WebSocket connection open
+socket.onopen = () => {
+  console.log("Connected to WebSocket server!");
+};
 
 // Handle incoming messages
 socket.onmessage = (event) => {
@@ -23,8 +28,9 @@ socket.onmessage = (event) => {
 };
 
 // Handle WebSocket connection errors
-socket.onerror = () => {
-  alert("WebSocket connection error. Please check your internet connection!");
+socket.onerror = (error) => {
+  console.error("WebSocket error:", error);
+  alert("Unable to connect to WebSocket server!");
 };
 
 // Send a message
